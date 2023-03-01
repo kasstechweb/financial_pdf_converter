@@ -2,7 +2,7 @@ import os
 from PyQt6.QtWidgets import (QWidget, QPushButton, QFileDialog,
                                 QLabel, QGridLayout, QVBoxLayout, QHBoxLayout, QListWidget)
 import shutil
-
+import convert
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -113,6 +113,10 @@ class MyApp(QWidget):
 
 
     def convert(self):
+
+        # insert item at the top of the list
+        self.list_widget.insertItem(0, 'test')
+        # self.list_widget.addItem('test')
         print('convert')
 
     def open_folder(self):
