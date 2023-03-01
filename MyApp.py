@@ -35,17 +35,24 @@ class MyApp(QWidget):
 
 
         convert_btn = QPushButton('Convert')
+        convert_btn.clicked.connect(self.convert)
         top_layout.addWidget(convert_btn, 2, 0, 1, 3)
 
         self.list_widget = QListWidget(self)
-        self.list_widget.addItems(['Learn Python', 'Master PyQt'])
+        dir_path = os.getcwd() + '\\output\\'
+        files_list = []
+        for path in os.listdir(dir_path):
+            if os.path.isfile(os.path.join(dir_path, path)):
+                files_list.append(path)
+        self.list_widget.addItems(files_list)
         bottom_layout.addWidget(self.list_widget, 3, 0, 4, 2)
 
         # create buttons
         add_button = QPushButton('Open')
         # add_button.clicked.connect(self.add)
         remove_button = QPushButton('Remove')
-        # remove_button.clicked.connect(self.remove)
+        remove_button.clicked.connect(self.remove)
+
         clear_button = QPushButton('Clear')
         # clear_button.clicked.connect(self.clear)
         folder_button = QPushButton('Open Folder')
@@ -78,14 +85,14 @@ class MyApp(QWidget):
         # check if user canceled
         if filename:
              # get the current working directory
-            dest_path = os.getcwd()
+            dest_path = os.getcwd() + '\\temp\\'
             # move the file to the current working directory
-            # shutil.move(filename, dest_path) # uncomment to move file
+            shutil.move(filename, dest_path) # uncomment to move file
             # update the label with file path
             filename_no_path = os.path.basename(filename)
             print(filename_no_path)
-            self.list_widget.addItem(filename_no_path)
-            self.label1.setText(os.path.basename(filename))
+            # self.list_widget.addItem(filename_no_path)
+            self.label1.setText(filename_no_path)
         print(str(response))
 
     def uploadFile2(self):
@@ -104,7 +111,18 @@ class MyApp(QWidget):
             self.label2.setText(filename)
         print('upload file 2')
 
+
+    def convert(self):
+        print('convert')
+
     def open_folder(self):
-        path = "C:/Users"
+        path = os.getcwd() + '\\output\\'
         path = os.path.realpath(path)
         os.startfile(path)
+
+    def remove(self):
+        current_row = self.list_widget.currentRow()
+        if current_row >= 0:
+            current_item = self.list_widget.takeItem(current_row)
+            print(current_item.text())
+            del current_item
