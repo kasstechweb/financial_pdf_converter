@@ -10,7 +10,7 @@ import xlsxwriter
 from functions import clean_amount, copy_format, generate_output_name
 
 def convert(balance_sheet, income_statement_sheet, progress_bar):
-    
+
     output_name = generate_output_name(balance_sheet)
     output_file = 'output/' + output_name + '.xlsx'
 
@@ -61,7 +61,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     assets_line = assets_re.findall(text)
     if assets_line:
         for line in assets_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?(\d{3})?\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -73,7 +73,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     liabilities_line = liabilities_re.findall(text)
     if liabilities_line:
         for line in liabilities_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?(\d{3})?\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -85,7 +85,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     equity_line = equity_re.findall(text)
     if equity_line:
         for line in equity_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?(\d{3})?\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -97,7 +97,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     retained_line = retained_re.findall(text)
     if retained_line:
         for line in retained_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?(\d{3})?\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
