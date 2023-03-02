@@ -1,3 +1,6 @@
+import re
+import os
+
 def copy_format(book, fmt):
     properties = [f[4:] for f in dir(fmt) if f[0:4] == 'set_']
     dft_fmt = book.add_format()
@@ -20,3 +23,18 @@ def clean_amount(str):
             return_int = int(new_str)
         return return_int
 
+def generate_output_name(balance_sheet_name):
+    output_name = balance_sheet_name.replace('-S125-', '')
+    output_name = output_name.replace('-S100-', '')
+    output_name = output_name.replace('.pdf', '')
+    output_name = re.sub("\d", '', output_name)
+
+    # if directory has same file add numbers
+    path = 'output/' + output_name + '.xlsx'
+    num = 2
+    while os.path.isfile(path):
+        new_output_name = output_name + str(num)
+        path = 'output/' + new_output_name + '.xlsx'
+        num += 1
+
+    return new_output_name

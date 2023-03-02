@@ -7,18 +7,13 @@ import os
 from PIL import Image
 import pytesseract
 import xlsxwriter
-from functions import clean_amount, copy_format
+from functions import clean_amount, copy_format, generate_output_name
 
-def convert(balance_sheet, income_statement_sheet):
-    # balance_sheet = 'temp/balance_sheet2.pdf'
-    # income_statement_sheet = 'temp/income_statement2.pdf'
-    # get output name from the balance sheet name
-    output_name = balance_sheet.replace('-S125-', '')
-    output_name = output_name.replace('-S100-', '')
-    output_name = output_name.replace('.pdf', '')
-    output_name = re.sub("\d", '', output_name)
-
+def convert(balance_sheet, income_statement_sheet, progress_bar):
+    
+    output_name = generate_output_name(balance_sheet)
     output_file = 'output/' + output_name + '.xlsx'
+
     balance_sheet = 'temp/' + balance_sheet
     income_statement_sheet = 'temp/' + income_statement_sheet
 
@@ -50,6 +45,7 @@ def convert(balance_sheet, income_statement_sheet):
     extracted_date = datetime.strptime(match.group(), '%Y-%m-%d').date()
     final_date = extracted_date.strftime("%b %d, %Y")
     year = extracted_date.strftime("%Y")
+    progress_bar.setValue(10)
 
     # text with layout to get the body of the document
     text = '' 
@@ -58,6 +54,7 @@ def convert(balance_sheet, income_statement_sheet):
         for page in pdf.pages:
             single_page_text = page.extract_text(layout=True)
             text = text + '\n' + single_page_text
+    progress_bar.setValue(15)
 
     # get the assets from balance sheet
     assets_re = re.compile(r'(?:\bAssets\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)\n([\s\S]*)(?:\bLiabilities\s.*Code\s.* Current\s.*year\s.*Prior\s.*year\b)')
@@ -69,6 +66,7 @@ def convert(balance_sheet, income_statement_sheet):
             if single_line:
                 for item in single_line:
                     assets.append(item)
+    progress_bar.setValue(20)
 
     # get the liabilities from balance sheet
     liabilities_re = re.compile(r'(?:\bLiabilities\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)\n([\s\S]*)(?:\bEquity\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)')
@@ -80,6 +78,7 @@ def convert(balance_sheet, income_statement_sheet):
             if single_line:
                 for item in single_line:
                     liabilities.append(item)
+    progress_bar.setValue(25)
 
     # get the equities from balance sheet
     equity_re = re.compile(r'(?:\bEquity\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)\n([\s\S]*)(?:\bRetained\s.*earnings\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)')
@@ -91,6 +90,7 @@ def convert(balance_sheet, income_statement_sheet):
             if single_line:
                 for item in single_line:
                     equities.append(item)
+    progress_bar.setValue(30)
 
     # get the retained_earnings from balance sheet
     retained_re = re.compile(r'(?:\bRetained\s.*earnings\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)\n([\s\S]*)(?:\b\\*The\s.*amount\s.*on\s.*line\b)')
@@ -102,6 +102,7 @@ def convert(balance_sheet, income_statement_sheet):
             if single_line:
                 for item in single_line:
                     retained_earnings.append(item)
+    progress_bar.setValue(40)
 
     # ============================================ Income Statement Sheet ==================================
     zoom = 3
@@ -124,7 +125,8 @@ def convert(balance_sheet, income_statement_sheet):
             is_pdf_p = pytesseract.image_to_pdf_or_hocr('temp/' + file_name, extension='pdf')
             with open(f'temp/is_pdf_p{page_id}.pdf', 'w+b') as f:
                 f.write(is_pdf_p) 
-        
+    progress_bar.setValue(50)
+
     # get text from pdf pages
     is_text_p1 = ''
     is_text_p2 = ''
@@ -138,6 +140,7 @@ def convert(balance_sheet, income_statement_sheet):
         for page in pdf.pages:
             single_page_text = page.extract_text(layout=False)
             is_text_p2 = is_text_p2 + '\n' + single_page_text
+    # progress_bar.setValue(45)
 
     is_revenue_re = re.compile(r'(?:\bRevenue\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)\n([\s\S]*)(?:\bCost\s.*of\s.*sales\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)')
     is_revenue_line = is_revenue_re.findall(is_text_p1)
@@ -148,6 +151,7 @@ def convert(balance_sheet, income_statement_sheet):
             if single_line:
                 for item in single_line:
                     is_revenue.append(item)
+    # progress_bar.setValue(50)
 
     # get is Cost of sales
     is_cos_re = re.compile(r'(?:\bCost\s.*of\s.*sales\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)\n([\s\S]*)(?:\bOperating\s.*expenses\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)')
@@ -159,6 +163,7 @@ def convert(balance_sheet, income_statement_sheet):
             if single_line:
                 for item in single_line:
                     is_cos.append(item)
+    progress_bar.setValue(55)
 
     # get is Operating expenses
     is_oe_re = re.compile(r'(?:\bOperating\s.*expenses\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)\n([\s\S]*)(?:\bFarming\s.*revenue\s.*Code\s.*Current\s.*year\s.*Prior\s.*year\b)')
@@ -170,12 +175,14 @@ def convert(balance_sheet, income_statement_sheet):
             if single_line:
                 for item in single_line:
                     is_oe.append(item)
+    progress_bar.setValue(60)
 
     # get is taxes and net income
     is_current_taxes_re = re.compile(r'(\bCurrent\s.*income\s.*taxes\b)\s{2,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?\s{2,30}\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?')
     is_current_taxes = is_current_taxes_re.findall(is_text_p2)
     is_net_income_re = re.compile(r'(\bNet\s.*income\s.*loss\s.*after\s.*taxes\s.*and\s.*extraordinary\s.*items\b)\s{2,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?\s{2,30}\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?')
     is_net_income = is_net_income_re.findall(is_text_p2)
+    progress_bar.setValue(65)
 
     # ============================================ create excel file ==================================
     workbook = xlsxwriter.Workbook(output_file)
@@ -257,6 +264,7 @@ def convert(balance_sheet, income_statement_sheet):
     title_sheet.merge_range('A3:G3', 'FINANCIAL STATEMENTS', initial_format)
     title_sheet.merge_range('A4:G4', 'AS AT ' + final_date, initial_format)
 
+    progress_bar.setValue(70)
     # /////////////////////////////////// Balance Sheet ///////////////////////
     balance_sheet = workbook.add_worksheet('Balance Sheet')
 
@@ -358,6 +366,7 @@ def convert(balance_sheet, income_statement_sheet):
     balance_sheet.write('A' + str(row_num), 'Director:', font10_left_no_bold) 
     balance_sheet.write('B' + str(row_num), ' ', bottom_one) 
 
+    progress_bar.setValue(75)
     # ////////////////////////////////////// (INCOME STATEMENT) IS Sheet ///////////////////////
     is_sheet = workbook.add_worksheet('IS')
     row_num = 0
@@ -462,6 +471,7 @@ def convert(balance_sheet, income_statement_sheet):
     is_sheet.write('E' + str(row_num), clean_amount(is_net_income[0][2]), currency_format)
     is_sheet.write('G' + str(row_num), clean_amount(is_net_income[0][4]), currency_format)
 
+    progress_bar.setValue(80)
     # ///////////////////////////////// STATEMENT OF RETAINED EARNING / (DEFICIT) RE Sheet ///////////////////////
     re_sheet = workbook.add_worksheet('RE')
     row_num = 0

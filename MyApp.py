@@ -1,6 +1,6 @@
 import os
 from PyQt6.QtWidgets import (QWidget, QPushButton, QFileDialog,
-                                QLabel, QGridLayout, QMessageBox, QListWidget)
+                                QLabel, QGridLayout, QMessageBox, QListWidget, QProgressBar)
 import shutil
 from convert import convert
 class MyApp(QWidget):
@@ -40,8 +40,8 @@ class MyApp(QWidget):
         self.convert_btn.clicked.connect(self.start_convert)
         top_layout.addWidget(self.convert_btn, 2, 0, 1, 3)
 
-        self.label3 = QLabel('')
-        top_layout.addWidget(self.label3, 3, 0, 1, 3)
+        self.progress_bar = QProgressBar(self)
+        top_layout.addWidget(self.progress_bar, 3, 0, 1, 3)
 
         self.list_widget = QListWidget(self)
         dir_path = os.getcwd() + '\\output\\'
@@ -49,6 +49,7 @@ class MyApp(QWidget):
         for path in os.listdir(dir_path):
             if os.path.isfile(os.path.join(dir_path, path)):
                 files_list.append(path)
+        files_list.reverse()
         self.list_widget.addItems(files_list)
         bottom_layout.addWidget(self.list_widget, 3, 0, 4, 2)
 
@@ -58,21 +59,17 @@ class MyApp(QWidget):
         remove_button = QPushButton('Remove')
         remove_button.clicked.connect(self.remove)
 
-        # clear_button = QPushButton('Clear')
-        # clear_button.clicked.connect(self.clear)
         folder_button = QPushButton('Open Folder')
         folder_button.clicked.connect(self.open_folder)
 
         bottom_layout.addWidget(open_button, 3, 2)
         bottom_layout.addWidget(remove_button, 4, 2)
-        # bottom_layout.addWidget(clear_button, 5, 2)
         bottom_layout.addWidget(folder_button, 6, 2)
 
         top_layout.setVerticalSpacing(10)
         bottom_layout.setVerticalSpacing(10)
         bottom_layout.setHorizontalSpacing(10)
         outer_layout.setVerticalSpacing(40)
-        # outer_layout.setHorizontalSpacing(30)
         outer_layout.addLayout(top_layout, 0, 0)
         outer_layout.addLayout(bottom_layout, 1, 0)
         self.setLayout(outer_layout)
@@ -120,20 +117,17 @@ class MyApp(QWidget):
 
 
     def start_convert(self):
-        # print(self.balance_sheet)
-        # self.convert_btn.setText('Converting, Please wait...')
-        self.label3.setText('Converting, Please wait...')
-        self.label1.setText('No file selected')
-        self.label2.setText('No file selected')
+        self.progress_bar.setValue(5)
         
         # balance_sheet = 'temp/' + self.balance_sheet
-        if self.balance_sheet != '' and self.income_statement_sheet != '':
-            output_file = convert(self.balance_sheet, self.income_statement_sheet)
+        if self.balance_sheet != '' and self.income_statement_sheet != '' and self.label1.text() != 'No file selected' and self.label2.text() != 'No file selected':
+            output_file = convert(self.balance_sheet, self.income_statement_sheet, self.progress_bar)
             # print(output_file)
             if output_file:
-                self.label3.setText('after')
+                # self.label3.setText('after')
                 # insert item at the top of the list
                 self.list_widget.insertItem(0, output_file + '.xlsx')
+                self.progress_bar.setValue(100)
                 # delete old files from temp
                 folder = 'temp/'
                 for filename in os.listdir(folder):
@@ -145,8 +139,12 @@ class MyApp(QWidget):
                             shutil.rmtree(file_path)
                     except Exception as e:
                         print('Failed to delete %s. Reason: %s' % (file_path, e))
+                self.progress_bar.reset()
+                self.label1.setText('No file selected')
+                self.label2.setText('No file selected')
                 # self.convert_btn.setText('Convert') # change button text back
         else:
+            self.progress_bar.reset()
             # self.convert_btn.setText('Convert')
             dlg = QMessageBox(self)
             dlg.setWindowTitle("Error")
