@@ -27,14 +27,19 @@ def generate_output_name(balance_sheet_name):
     output_name = balance_sheet_name.replace('-S125-', '')
     output_name = output_name.replace('-S100-', '')
     output_name = output_name.replace('.pdf', '')
+    output_name = output_name.replace('(', '')
+    output_name = output_name.replace(')', '')
     output_name = re.sub("\d", '', output_name)
 
     # if directory has same file add numbers
     path = 'output/' + output_name + '.xlsx'
     num = 2
+    new_output_name = ''
     while os.path.isfile(path):
         new_output_name = output_name + str(num)
         path = 'output/' + new_output_name + '.xlsx'
         num += 1
-
+    # print(new_output_name)
+    if new_output_name == '':
+        new_output_name = output_name
     return new_output_name

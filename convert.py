@@ -61,7 +61,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     assets_line = assets_re.findall(text)
     if assets_line:
         for line in assets_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?(\d{3})?\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{2,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -73,7 +73,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     liabilities_line = liabilities_re.findall(text)
     if liabilities_line:
         for line in liabilities_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?(\d{3})?\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{2,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -85,7 +85,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     equity_line = equity_re.findall(text)
     if equity_line:
         for line in equity_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?(\d{3})?\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{2,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -97,7 +97,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     retained_line = retained_re.findall(text)
     if retained_line:
         for line in retained_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,8}(\(?\d{1,3},?\d{3}\)?)?(\s{3,12})?(\(?\d{1,3},?(\d{3})?\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{2,30}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -105,7 +105,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     progress_bar.setValue(40)
 
     # ============================================ Income Statement Sheet ==================================
-    zoom = 3
+    zoom = 4
 
     # convert income statement sheet to images
     with fitz.open(income_statement_sheet) as doc:
@@ -146,7 +146,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     is_revenue_line = is_revenue_re.findall(is_text_p1)
     if is_revenue_line:
         for line in is_revenue_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,30}(\(?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,30}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -158,7 +158,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     is_cos_line = is_cos_re.findall(is_text_p1)
     if is_cos_line:
         for line in is_cos_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,30}(\(?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,30}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -170,7 +170,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     is_oe_line = is_oe_re.findall(is_text_p1)
     if is_oe_line:
         for line in is_oe_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,30}(\(?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,30}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -178,9 +178,9 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     progress_bar.setValue(60)
 
     # get is taxes and net income
-    is_current_taxes_re = re.compile(r'(\bCurrent\s.*income\s.*taxes\b)\s{2,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?\s{2,30}\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?')
+    is_current_taxes_re = re.compile(r'(\bCurrent\s.*income\s.*taxes\b)\s{2,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?(\s{2,30})?\-?\+?\=?(\s{2,30})?(\(?(\d{1,3})?,?\d{3}\)?)?')
     is_current_taxes = is_current_taxes_re.findall(is_text_p2)
-    is_net_income_re = re.compile(r'(\bNet\s.*income\s.*loss\s.*after\s.*taxes\s.*and\s.*extraordinary\s.*items\b)\s{2,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?\s{2,30}\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?')
+    is_net_income_re = re.compile(r'(\bNet\s.*income\s.*\/\s.*loss\s.*after\s.*taxes\s.*and\s.*extraordinary\s.*items\b)\s{2,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?')
     is_net_income = is_net_income_re.findall(is_text_p2)
     progress_bar.setValue(65)
 
@@ -293,18 +293,20 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     row_num = 12
     for x in assets:
         title =  x[0].rstrip()
-        if title == 'Total assets':
+        title = title.replace(' ', '')
+        title = title.lower()
+        if title == 'totalassets':
             row_num += 1
-            balance_sheet.write('B' + str(row_num), title, font10_top_left_bold)
+            balance_sheet.write('B' + str(row_num), x[0].rstrip(), font10_top_left_bold)
             balance_sheet.write('C' + str(row_num), ' ', font10_top_left_bold)
             balance_sheet.write('D' + str(row_num), ' ', font10_top_left_bold)
             balance_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_top)
             balance_sheet.write('F' + str(row_num), ' ', font10_top_left_bold)
-            balance_sheet.write('G' + str(row_num), clean_amount(x[4]), currency_top)
+            balance_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_top)
         else:
-            balance_sheet.write('B' + str(row_num), title, font10_left_no_bold)
+            balance_sheet.write('B' + str(row_num), x[0].rstrip(), font10_left_no_bold)
             balance_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
-            balance_sheet.write('G' + str(row_num), clean_amount(x[4]), currency_format)
+            balance_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
         row_num += 1
         
     # LIABILITIES 
@@ -317,7 +319,9 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     for x in liabilities:
         # print(clean_amount(x[2]))
         title =  x[0].rstrip()
-        if title == 'Total liabilities':
+        title = title.replace(' ', '')
+        title = title.lower()
+        if title == 'totalliabilities':
             row_num += 1
             balance_sheet.write('B' + str(row_num), 'LONG TERM DEBTS:', font10_left)
             row_num += 2
@@ -329,39 +333,51 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
             balance_sheet.write('E' + str(row_num), 0, currency_format)
             balance_sheet.write('G' + str(row_num), 0, currency_format)
             row_num += 1
-            balance_sheet.write('B' + str(row_num), title, font10_top_left_bold)
+            balance_sheet.write('B' + str(row_num), x[0].rstrip(), font10_top_left_bold)
             balance_sheet.write('C' + str(row_num), ' ', font10_top_left_bold)
             balance_sheet.write('D' + str(row_num), ' ', font10_top_left_bold)
             balance_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_top)
             balance_sheet.write('F' + str(row_num), ' ', font10_top_left_bold)
-            balance_sheet.write('G' + str(row_num), clean_amount(x[4]), currency_top)
+            balance_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_top)
         else:
-            balance_sheet.write('B' + str(row_num), title, font10_left_no_bold)
+            balance_sheet.write('B' + str(row_num), x[0].rstrip(), font10_left_no_bold)
             balance_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
-            balance_sheet.write('G' + str(row_num), clean_amount(x[4]), currency_format)
+            balance_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
         row_num += 1
 
     # Equity 
     row_num += 2
-    balance_sheet.write('B' + str(row_num), 'SHAREHOLDERS EQUITY:', font10_left)
-    row_num += 2
-    balance_sheet.write('B' + str(row_num), 'Retained Earnings', font10_left_no_bold)
-    balance_sheet.write('E' + str(row_num), clean_amount(equities[0][2]), currency_format)
-    balance_sheet.write('G' + str(row_num), clean_amount(equities[0][4]), currency_format)
-    row_num += 1
-    balance_sheet.write('B' + str(row_num), ' ', font10_top_left_bold)
-    balance_sheet.write('C' + str(row_num), ' ', font10_top_left_bold)
-    balance_sheet.write('D' + str(row_num), ' ', font10_top_left_bold)
-    balance_sheet.write('E' + str(row_num), clean_amount(equities[0][2]), currency_top)
-    balance_sheet.write('F' + str(row_num), ' ', font10_top_left_bold)
-    balance_sheet.write('G' + str(row_num), clean_amount(equities[0][4]), currency_top)
-    row_num += 2
-    balance_sheet.write('A' + str(row_num), 'TOTAL LIABILITIES & SHAREHOLDERS EQUITY', font10_left) 
-    balance_sheet.write('E' + str(row_num), clean_amount(equities[2][2]), currency_top_bottom)
-    balance_sheet.write('G' + str(row_num), clean_amount(equities[2][4]), currency_top_bottom)
-    row_num += 1
-    balance_sheet.write('E' + str(row_num), ' ', currency_top)
-    balance_sheet.write('G' + str(row_num), ' ', currency_top)
+    for x in equities:
+        title =  x[0].rstrip()
+        # title = title.replace(' ', '')
+        title = title.lower()
+        if 'retained earnings' in title:
+            balance_sheet.write('B' + str(row_num), 'Retained Earnings', font10_left_no_bold)
+            balance_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
+            balance_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
+            row_num += 1 
+            balance_sheet.write('B' + str(row_num), ' ', font10_top_left_bold)
+            balance_sheet.write('C' + str(row_num), ' ', font10_top_left_bold)
+            balance_sheet.write('D' + str(row_num), ' ', font10_top_left_bold)
+            balance_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_top)
+            balance_sheet.write('F' + str(row_num), ' ', font10_top_left_bold)
+            balance_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_top)
+            row_num += 2
+        elif 'total liabilities and equity' in title:
+            balance_sheet.write('A' + str(row_num), 'TOTAL LIABILITIES & SHAREHOLDERS EQUITY', font10_left) 
+            balance_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_top_bottom)
+            balance_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_top_bottom)
+            row_num += 1
+            balance_sheet.write('E' + str(row_num), ' ', currency_top)
+            balance_sheet.write('G' + str(row_num), ' ', currency_top)
+        elif 'common shares' in title:
+            balance_sheet.write('B' + str(row_num), 'SHAREHOLDERS EQUITY:', font10_left)
+            row_num += 1
+            balance_sheet.write('B' + str(row_num), 'Common shares', font10_left_no_bold)
+            balance_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
+            balance_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
+            row_num += 2
+    
     row_num += 2
     balance_sheet.write('A' + str(row_num), 'Director:', font10_left_no_bold) 
     balance_sheet.write('B' + str(row_num), ' ', bottom_one) 
@@ -373,11 +389,11 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
 
     is_sheet.set_row(1, 20)
     is_sheet.set_column('B:B', 50)
-    is_sheet.set_column('C:C', 10)
+    is_sheet.set_column('C:C', 5)
     is_sheet.set_column('D:D', 3)
     is_sheet.set_column('F:F', 3)
-    is_sheet.set_column('E:E', 10)
-    is_sheet.set_column('G:G', 10)
+    is_sheet.set_column('E:E', 15)
+    is_sheet.set_column('G:G', 15)
 
     # TOP TITLE
     is_sheet.merge_range('A2:G2', company_name, title_top_left)
@@ -393,7 +409,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     row_num += 2
     is_sheet.write('B' + str(row_num), 'Revenue', font10_left_no_bold)
     is_sheet.write('E' + str(row_num), clean_amount(is_revenue[2][2]), currency_format)
-    is_sheet.write('G' + str(row_num), clean_amount(is_revenue[2][5]), currency_format)
+    is_sheet.write('G' + str(row_num), clean_amount(is_revenue[2][6]), currency_format)
     row_num += 1
     is_sheet.write('B' + str(row_num), ' ', font10_top_left_bold)
     is_sheet.write('C' + str(row_num), ' ', font10_top_left_bold)
@@ -409,23 +425,25 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
 
     for x in is_cos:
         title =  x[0].rstrip()
-        if title == 'Cost  of  sales':
+        title = title.replace(' ', '')
+        title = title.lower()
+        if title == 'costofsales':
             is_sheet.write('B' + str(row_num), 'Cost of sales', font10_top_left_bold)
             is_sheet.write('C' + str(row_num), ' ', font10_top_left_bold)
             is_sheet.write('D' + str(row_num), ' ', font10_top_left_bold)
             is_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_top)
             is_sheet.write('F' + str(row_num), ' ', font10_top_left_bold)
-            is_sheet.write('G' + str(row_num), clean_amount(x[5]), currency_top)
-        elif 'Gross   profit' in title:
+            is_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_top)
+        elif 'grossprofit' in title:
             row_num += 1
             is_sheet.write('A' + str(row_num), 'GROSS MARGIN', font10_left)
             is_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_top)
             is_sheet.write('F' + str(row_num), ' ', font10_top_left_bold)
-            is_sheet.write('G' + str(row_num), clean_amount(x[5]), currency_top)
+            is_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_top)
         else:
-            is_sheet.write('B' + str(row_num), title, font10_left_no_bold)
+            is_sheet.write('B' + str(row_num), x[0].rstrip(), font10_left_no_bold)
             is_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
-            is_sheet.write('G' + str(row_num), clean_amount(x[5]), currency_format)
+            is_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
         row_num += 1
 
     # Operating expenses
@@ -434,7 +452,9 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     row_num += 2
     for x in is_oe:
         title =  x[0].rstrip()
-        if title == 'Total  operating   expenses':
+        title = title.replace(' ', '')
+        title = title.lower()
+        if title == 'totaloperatingexpenses':
             row_num += 1
             is_sheet.write('B' + str(row_num), ' ', font10_top_left_bold)
             is_sheet.write('C' + str(row_num), ' ', font10_top_left_bold)
@@ -448,28 +468,30 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
             is_sheet.write('D' + str(row_num), ' ', font10_top_left_bold)
             is_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_top)
             is_sheet.write('F' + str(row_num), ' ', font10_top_left_bold)
-            is_sheet.write('G' + str(row_num), clean_amount(x[5]), currency_top)
-        elif 'Net  non-farming     income' in title:
+            is_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_top)
+        elif title == 'netnon-farmingincome':
             row_num += 1
             is_sheet.write('B' + str(row_num), 'INCOME / (LOSS) FROM OPERATION', font10_left)
             is_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_top)
             is_sheet.write('F' + str(row_num), ' ', font10_top_left_bold)
-            is_sheet.write('G' + str(row_num), clean_amount(x[5]), currency_top)
-        elif 'Total  expenses' in title:
+            is_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_top)
+        elif title == 'totalexpenses':
             continue
         else:
-            is_sheet.write('B' + str(row_num), title, font10_left_no_bold)
+            is_sheet.write('B' + str(row_num), x[0].rstrip(), font10_left_no_bold)
             is_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
-            is_sheet.write('G' + str(row_num), clean_amount(x[5]), currency_format)
+            is_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
         row_num += 1
     row_num += 1
     is_sheet.write('B' + str(row_num), 'Current Income Taxes', font10_left)
     is_sheet.write('E' + str(row_num), clean_amount(is_current_taxes[0][3]), currency_format)
-    is_sheet.write('G' + str(row_num), clean_amount(is_current_taxes[0][5]), currency_format)
+    if len(is_current_taxes[0]) > 6:
+        is_sheet.write('G' + str(row_num), clean_amount(is_current_taxes[0][7]), currency_format)
     row_num += 2
     is_sheet.write('B' + str(row_num), 'INCOME / (LOSS) AFTER TAXES', font10_left)
-    is_sheet.write('E' + str(row_num), clean_amount(is_net_income[0][2]), currency_format)
-    is_sheet.write('G' + str(row_num), clean_amount(is_net_income[0][4]), currency_format)
+    is_sheet.write('E' + str(row_num), clean_amount(is_net_income[0][3]), currency_format)
+    if len(is_net_income[0]) > 5:
+        is_sheet.write('G' + str(row_num), clean_amount(is_net_income[0][6]), currency_format)
 
     progress_bar.setValue(80)
     # ///////////////////////////////// STATEMENT OF RETAINED EARNING / (DEFICIT) RE Sheet ///////////////////////
@@ -500,22 +522,25 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
 
     for x in retained_earnings:
         title =  x[0].rstrip()
+        title = title.replace(' ', '')
+        title = title.lower()
         if 'deficit-start' in title:
             re_sheet.write('B' + str(row_num), 'Balance at beginning of year', font10_left_no_bold)
             re_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
-            re_sheet.write('G' + str(row_num), clean_amount(x[4]), currency_format)
+            re_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
             row_num += 1
-        elif 'Dividends declared' in title:
+        elif 'dividendsdeclared' in title:
             re_sheet.write('B' + str(row_num), 'Dividend Issued', font10_left_no_bold)
             re_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
-            re_sheet.write('G' + str(row_num), clean_amount(x[4]), currency_format)
+            re_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
             row_num += 1
+            
     for x in retained_earnings:
         title =  x[0].rstrip()
         if 'Net income / loss' in title:
             re_sheet.write('B' + str(row_num), 'Net Income / (Loss) for the year', font10_left_no_bold)
             re_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
-            re_sheet.write('G' + str(row_num), clean_amount(x[4]), currency_format)
+            re_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
             row_num += 1
             re_sheet.write('B' + str(row_num), ' ', font10_top_left_bold)
             re_sheet.write('C' + str(row_num), ' ', font10_top_left_bold)
@@ -527,7 +552,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
         elif 'Total retained earnings' in title:
             re_sheet.write('B' + str(row_num), 'Retained earning / (deficit) at the end of year', font10_left_no_bold)
             re_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_bottom_double)
-            re_sheet.write('G' + str(row_num), clean_amount(x[4]), currency_bottom_double)
+            re_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_bottom_double)
 
     # close the workbook
     workbook.close()
