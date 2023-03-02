@@ -8,7 +8,8 @@ from PIL import Image
 import pytesseract
 import xlsxwriter
 from functions import clean_amount, copy_format
-def start(balance_sheet, income_statement_sheet):
+
+def convert(balance_sheet, income_statement_sheet):
     # balance_sheet = 'temp/balance_sheet2.pdf'
     # income_statement_sheet = 'temp/income_statement2.pdf'
     # get output name from the balance sheet name
@@ -18,6 +19,8 @@ def start(balance_sheet, income_statement_sheet):
     output_name = re.sub("\d", '', output_name)
 
     output_file = 'output/' + output_name + '.xlsx'
+    balance_sheet = 'temp/' + balance_sheet
+    income_statement_sheet = 'temp/' + income_statement_sheet
 
     assets = []
     liabilities = []
@@ -169,9 +172,9 @@ def start(balance_sheet, income_statement_sheet):
                     is_oe.append(item)
 
     # get is taxes and net income
-    is_current_taxes_re = re.compile(r'(\bCurrent\s.*income\s.*taxes\b)\s{2,30}(\d{4})\s{2,30}\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?\s{2,30}\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?')
+    is_current_taxes_re = re.compile(r'(\bCurrent\s.*income\s.*taxes\b)\s{2,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?\s{2,30}\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?')
     is_current_taxes = is_current_taxes_re.findall(is_text_p2)
-    is_net_income_re = re.compile(r'(\bNet\s.*income\s.*loss\s.*after\s.*taxes\s.*and\s.*extraordinary\s.*items\b)\s{2,30}(\d{4})\s{2,30}\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?\s{2,30}\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?')
+    is_net_income_re = re.compile(r'(\bNet\s.*income\s.*loss\s.*after\s.*taxes\s.*and\s.*extraordinary\s.*items\b)\s{2,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?\s{2,30}\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?')
     is_net_income = is_net_income_re.findall(is_text_p2)
 
     # ============================================ create excel file ==================================
@@ -452,8 +455,8 @@ def start(balance_sheet, income_statement_sheet):
         row_num += 1
     row_num += 1
     is_sheet.write('B' + str(row_num), 'Current Income Taxes', font10_left)
-    is_sheet.write('E' + str(row_num), clean_amount(is_current_taxes[0][2]), currency_format)
-    is_sheet.write('G' + str(row_num), clean_amount(is_current_taxes[0][4]), currency_format)
+    is_sheet.write('E' + str(row_num), clean_amount(is_current_taxes[0][3]), currency_format)
+    is_sheet.write('G' + str(row_num), clean_amount(is_current_taxes[0][5]), currency_format)
     row_num += 2
     is_sheet.write('B' + str(row_num), 'INCOME / (LOSS) AFTER TAXES', font10_left)
     is_sheet.write('E' + str(row_num), clean_amount(is_net_income[0][2]), currency_format)
