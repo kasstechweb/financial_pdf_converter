@@ -73,7 +73,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     liabilities_line = liabilities_re.findall(text)
     if liabilities_line:
         for line in liabilities_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{2,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{2,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{2,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -146,7 +146,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     is_revenue_line = is_revenue_re.findall(is_text_p1)
     if is_revenue_line:
         for line in is_revenue_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,30}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,35}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,35})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -158,7 +158,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     is_cos_line = is_cos_re.findall(is_text_p1)
     if is_cos_line:
         for line in is_cos_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,30}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,35}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,35})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -170,7 +170,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     is_oe_line = is_oe_re.findall(is_text_p1)
     if is_oe_line:
         for line in is_oe_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,30}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,36}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,35})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:

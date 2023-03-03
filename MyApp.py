@@ -8,7 +8,7 @@ class MyApp(QWidget):
     income_statement_sheet = ''
     def __init__(self):
         super().__init__()
-        self.window_width, self.window_height = 600, 100
+        self.window_width, self.window_height = 800, 100
         self.setMinimumSize(self.window_width, self.window_height)
 
         self.setWindowTitle('Financial Pdf Converter')
