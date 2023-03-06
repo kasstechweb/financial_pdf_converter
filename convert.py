@@ -61,7 +61,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     assets_line = assets_re.findall(text)
     if assets_line:
         for line in assets_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{2,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{1,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?(\s{1,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -73,7 +73,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     liabilities_line = liabilities_re.findall(text)
     if liabilities_line:
         for line in liabilities_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{2,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{2,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{1,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?(\s{1,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -85,7 +85,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     equity_line = equity_re.findall(text)
     if equity_line:
         for line in equity_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{2,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{1,12}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?(\s{1,12})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -97,7 +97,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     retained_line = retained_re.findall(text)
     if retained_line:
         for line in retained_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{2,30}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,30})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{1,30}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?(\s{1,30})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -146,7 +146,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     is_revenue_line = is_revenue_re.findall(is_text_p1)
     if is_revenue_line:
         for line in is_revenue_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,35}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,35})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{1,35}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?(\s{1,35})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -158,7 +158,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     is_cos_line = is_cos_re.findall(is_text_p1)
     if is_cos_line:
         for line in is_cos_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,35}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,35})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{1,35}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?(\s{1,35})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -170,7 +170,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     is_oe_line = is_oe_re.findall(is_text_p1)
     if is_oe_line:
         for line in is_oe_line[0].split('\n'):
-            single_line_re = re.compile(r'(\w.+)(\d{4})\s{6,36}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?(\s{3,35})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{3}\)?)?')
+            single_line_re = re.compile(r'(\w.+)(\d{4})\s{1,36}(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?(\s{1,35})?(\(?(\d{1,3})?,?(\d{1,3})?,?\d{1,3}\)?)?')
             single_line = single_line_re.findall(line)
             if single_line:
                 for item in single_line:
@@ -180,7 +180,7 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     # get is taxes and net income
     is_current_taxes_re = re.compile(r'(\bCurrent\s.*income\s.*taxes\b)\s{2,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?(\s{2,30})?\-?\+?\=?(\s{2,30})?(\(?(\d{1,3})?,?\d{3}\)?)?')
     is_current_taxes = is_current_taxes_re.findall(is_text_p2)
-    is_net_income_re = re.compile(r'(\bNet\s.*income\s.*\/\s.*loss\s.*after\s.*taxes\s.*and\s.*extraordinary\s.*items\b)\s{2,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?(\s{2,30})?\-?\+?\=?\s{2,30}(\(?(\d{1,3})?,?\d{3}\)?)?')
+    is_net_income_re = re.compile(r'(\bNet\s.*income\s.*\/\s.*loss\s.*after\s.*taxes\s.*and\s.*extraordinary\s.*items\b)\s{1,30}(\d{4})(\s{2,30})?\-?\+?\=?\s{1,30}(\(?(\d{1,3})?,?\d{1,3}\)?)?(\s{2,30})?\-?\+?\=?\s{1,30}(\(?(\d{1,3})?,?\d{1,3}\)?)?')
     is_net_income = is_net_income_re.findall(is_text_p2)
     progress_bar.setValue(65)
 
@@ -319,9 +319,11 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
     for x in liabilities:
         # print(clean_amount(x[2]))
         title =  x[0].rstrip()
+        title2 =  x[0].rstrip()
         title = title.replace(' ', '')
         title = title.lower()
-        if title == 'totalliabilities':
+        title2 = title2.lower()
+        if title == 'totalliabilities' or 'due to shareholder' in title2:
             row_num += 1
             balance_sheet.write('B' + str(row_num), 'LONG TERM DEBTS:', font10_left)
             row_num += 2
@@ -329,10 +331,11 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
             balance_sheet.write('E' + str(row_num), 0, currency_format)
             balance_sheet.write('G' + str(row_num), 0, currency_format)
             row_num += 1
-            balance_sheet.write('B' + str(row_num), 'Due to Shareholder', font10_left_no_bold)
-            balance_sheet.write('E' + str(row_num), 0, currency_format)
-            balance_sheet.write('G' + str(row_num), 0, currency_format)
-            row_num += 1
+            if 'due to shareholder' in title2:
+                balance_sheet.write('B' + str(row_num), 'Due to Shareholder', font10_left_no_bold)
+                balance_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
+                balance_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
+                row_num += 1
             balance_sheet.write('B' + str(row_num), x[0].rstrip(), font10_top_left_bold)
             balance_sheet.write('C' + str(row_num), ' ', font10_top_left_bold)
             balance_sheet.write('D' + str(row_num), ' ', font10_top_left_bold)
@@ -441,7 +444,11 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
             is_sheet.write('F' + str(row_num), ' ', font10_top_left_bold)
             is_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_top)
         else:
-            is_sheet.write('B' + str(row_num), x[0].rstrip(), font10_left_no_bold)
+            mystr = x[0].rstrip()
+            mystr = mystr.replace('    ', ' ')
+            mystr = mystr.replace('   ', ' ')
+            mystr = mystr.replace('  ', ' ')
+            is_sheet.write('B' + str(row_num), mystr, font10_left_no_bold)
             is_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
             is_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
         row_num += 1
@@ -478,7 +485,11 @@ def convert(balance_sheet, income_statement_sheet, progress_bar):
         elif title == 'totalexpenses':
             continue
         else:
-            is_sheet.write('B' + str(row_num), x[0].rstrip(), font10_left_no_bold)
+            mystr = x[0].rstrip()
+            mystr = mystr.replace('    ', ' ')
+            mystr = mystr.replace('   ', ' ')
+            mystr = mystr.replace('  ', ' ')
+            is_sheet.write('B' + str(row_num), mystr, font10_left_no_bold)
             is_sheet.write('E' + str(row_num), clean_amount(x[2]), currency_format)
             is_sheet.write('G' + str(row_num), clean_amount(x[6]), currency_format)
         row_num += 1
